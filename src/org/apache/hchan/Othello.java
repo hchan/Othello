@@ -1,6 +1,9 @@
+package org.apache.hchan;
 import java.awt.image.*;
 import java.awt.*;
 import java.applet.*;
+
+import org.apache.log4j.Logger;
 /* Othello
  by Henry Chan
  May/96
@@ -9,7 +12,7 @@ import java.applet.*;
 
 
 public class Othello extends Applet {
-  
+  Logger log = Logger.getLogger(Othello.class);
   MediaTracker tracker;
   static OthelloButton arry[][];
   Panel board;
@@ -17,17 +20,30 @@ public class Othello extends Applet {
   static int UserParameterLevelofRecursion;
   
   public void init(){
+	  log.info("in init");
+	  setSize(400, 400);
     int i,j;
-    UserParameterLevelofRecursion = 
-      Integer.valueOf(getParameter("iteration")).intValue();
+    UserParameterLevelofRecursion = 0;
+    try {
+    	UserParameterLevelofRecursion = Integer.valueOf(getParameter("iteration")).intValue();
+    } catch (Exception e) {
+    	UserParameterLevelofRecursion = 4;
+    }
     setLayout(new GridLayout(1,1));
     arry = new OthelloButton[10][10];
     tracker = new MediaTracker(this);
+    /*
     img1 = getImage(getDocumentBase(), "box1.gif");
     img2 = getImage(getDocumentBase(), "box2.gif");
     img3 = getImage(getDocumentBase(), "box3.gif");
     img4 = getImage(getDocumentBase(), "box4.gif");
-  
+  */
+    
+    img1 = getImage(Othello.class.getResource("box1.gif"));
+    img2 = getImage(Othello.class.getResource("box2.gif"));
+    img3 = getImage(Othello.class.getResource("box3.gif"));
+    img4 = getImage(Othello.class.getResource("box4.gif"));
+    
     tracker.addImage(img1, 0);
     tracker.addImage(img2, 0);
     tracker.addImage(img3, 0);
@@ -36,9 +52,11 @@ public class Othello extends Applet {
       tracker.waitForID(0);
     }
     catch  (InterruptedException e) {
+    	log.warn("", e);
     }
 
     board = new Panel();
+    //board.setSize(400, 400);
     board.setLayout(new GridLayout(0,8,1,0)); 
 
     for (j = 0; j < 10; j++) {

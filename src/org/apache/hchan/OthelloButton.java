@@ -1,3 +1,4 @@
+package org.apache.hchan;
 import java.awt.Canvas;
 import java.awt.Event;
 import java.awt.Graphics;
