@@ -1,0 +1,34 @@
+<HTML>
+<HEAD>
+</HEAD>
+
+<BODY>
+<H1>How to sign an applet (with Maven)</H1>
+
+<ul>
+<li>update your pom.xml with the following maven plugins: maven-jar-plugin, maven-assembly-plugin, maven-jarsigner-plugin</li>
+<li>here is my <a href="https://github.com/hchan/Othello/blob/master/pom.xml">pom.xml</a> for your reference</li>
+<li>the maven-jar-plugin is used to build the jar at the package phase (easiest plugin to understand)</li>
+<li>the maven-assembly-plugin is used to build one huge jar with dependencies (i.e. log4j )at the package phase</li>
+<li>the maven-jarsigner-plugin is used to sign the jar at the package phase
+<p>
+take a special note of the configuration section in the pom.xml for this plugin and notice the keystore element.<br/>
+Basically, it means you have to have a directory called keystore with a file called signing-jar.keystore.<br/>
+Here is my  <a href="https://github.com/hchan/Othello.git"> directory structure</a>
+Feel free to use mine.  Its self-signed, meaning it is insecure.
+</p>
+</li>
+<li>to run maven, you can do it from the command line (assuming you have maven installed): "mvn package" or ... </li>
+<li>from Eclipse:  Right click Project->Run As->Maven build...(and type package in the textbox Goals)</li>
+<li>here is an Eclipse <a href="https://github.com/hchan/Othello/blob/master/mvnPackage.launch">launch file</a> that does the same thing as above
+<p>hint, you can run Eclipse Launch Files by clicking on that file and then F11</p>
+</li>
+</ul>
+<hr/>
+Other tidbits of advice: test your applet locally first: i.e. file://<workspace director>/<project name>/index.html<br/>
+in your index.html file, make sure that your applet tag code uses your ...jar-with-dependencies.jar and has the correct applet code<br/>
+See my applet tag example <a href="https://github.com/hchan/Othello/blob/master/index.html">here</a><br/>
+If you are getting a self-signed error when you run your applet, modify your <a href="javaControlPanel.png">security settings</a> in Java Console (Exeption Site List).
+Java Console can be launched by: Windows Start->Configure Java
+</BODY>
+</HTML>
